@@ -6,382 +6,519 @@
     <title>Estudio J&A | Nail Art de Luxo</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
-    
-    
-    
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #FDFBF9; }
-        h1, h2, h3, .font-serif { font-family: 'Playfair Display', serif; }
-        
-        .glass-nav { 
-            background: rgba(255, 255, 255, 0.9); 
-            backdrop-filter: blur(12px); 
+        body { 
+            font-family: 'Inter', sans-serif; 
+            color: #2D2424;
         }
         
+        /* Fundo de Mármore bem visível */
+        .marble-pattern {
+            background-color: #FDFBF9;
+            background-image: linear-gradient(rgba(253, 251, 249, 0.50), rgba(253, 251, 249, 0.50)), url('https://www.transparenttextures.com/patterns/white-marble.png');
+            background-attachment: fixed;
+        }
+
         .btn-primary { 
-            background-color: #5D5050; 
+            background-color: #61525A; 
             transition: all 0.3s ease; 
         }
-        
         .btn-primary:hover { 
-            background-color: #4A3F3F; 
+            background-color: #4A3E45; 
             transform: translateY(-2px); 
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); 
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
         }
         
-        .card-service:hover img { 
-            transform: scale(1.05); 
-        }
-        
-        .marble-pattern {
-            background-image: linear-gradient(rgba(253, 251, 249, 0.95), rgba(253, 251, 249, 0.95)), url('https://www.transparenttextures.com/patterns/white-marble.png');
+        .card-hover:hover {
+            box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.08);
+            transform: translateY(-4px);
+            transition: all 0.3s ease;
         }
 
-        /* Ajustes da Logo para não quebrar o layout */
-        .logo-nav { max-height: 45px; width: auto; object-fit: contain; }
-        .logo-hero { max-height: 180px; width: auto; object-fit: contain; mix-blend-mode: multiply; }
+        .logo-blend { mix-blend-mode: multiply; }
+        
+        .glass-panel { 
+            background: rgba(255, 255, 255, 0.85); 
+            backdrop-filter: blur(12px); 
+        }
+
+        /* Classe para transição suave na galeria */
+        .gallery-item {
+            transition: opacity 0.3s ease;
+        }
     </style>
 </head>
-<body class="marble-pattern text-[#2D2424]">
+<body class="marble-pattern">
 
-    <nav class="flex justify-between items-center px-6 md:px-12 py-4 glass-nav sticky top-0 z-[100] border-b border-gray-100 shadow-sm">
-        <a href="#inicio" class="flex items-center">
-            <img src="logo.png" alt="Logo Estudio J&A" class="logo-nav">
+    <nav class="flex justify-between items-center px-6 md:px-12 py-3 glass-panel sticky top-0 z-[100] border-b border-gray-200/50 shadow-sm">
+        <a href="#inicio" class="flex items-center shrink-0">
+            <img src="logo.png" alt="Logo Estudio J&A" class="h-10 md:h-14 w-auto object-contain logo-blend">
         </a>
         
-        <div class="hidden lg:flex gap-10 text-[11px] uppercase tracking-[0.2em] font-semibold text-gray-500">
-            <a href="#inicio" class="hover:text-[#D4AF37] transition">Início</a>
-            <a href="#servicos" class="hover:text-[#D4AF37] transition">Serviços</a>
-            <a href="#galeria" class="hover:text-[#D4AF37] transition">Galeria</a>
-            <a href="#agendamento" class="hover:text-[#D4AF37] transition">Agendamento</a>
+        <div class="hidden lg:flex gap-8 text-[14px] font-medium text-gray-700">
+            <a href="#inicio" class="hover:text-[#61525A] transition">Início</a>
+            <a href="#servicos" class="hover:text-[#61525A] transition">Serviços</a>
+            <a href="#galeria" class="hover:text-[#61525A] transition">Galeria</a>
+            <a href="#agendamento" class="hover:text-[#61525A] transition">Agendamento</a>
+            <a href="#contato" class="hover:text-[#61525A] transition">Contato</a>
         </div>
 
-        <div class="flex items-center gap-6">
-            <div class="hidden sm:flex gap-4">
-                <a href="https://www.instagram.com/estudio_yalexary/" target="_blank" aria-label="Instagram"><i data-lucide="instagram" class="w-4 h-4 text-gray-400 hover:text-[#D4AF37] transition"></i></a>
-                <a href="https://www.facebook.com/joelma.maria.33886/" target="_blank" aria-label="Facebook"><i data-lucide="facebook" class="w-4 h-4 text-gray-400 hover:text-[#D4AF37] transition"></i></a>
-            </div>
-            <a href="#agendamento" class="btn-primary text-white px-6 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-widest hidden sm:block">Agendar</a>
-            <a href="#agendamento" class="btn-primary text-white p-2 rounded-full sm:hidden" aria-label="Agendar"><i data-lucide="calendar" class="w-4 h-4"></i></a>
+        <div class="flex items-center gap-4 shrink-0">
+            <a href="https://wa.me/5511987654321" target="_blank" class="text-gray-500 hover:text-[#61525A] transition hidden sm:block"><i data-lucide="phone" class="w-5 h-5"></i></a>
+            <a href="https://www.instagram.com/estudio_yalexary/" target="_blank" class="text-gray-500 hover:text-[#61525A] transition hidden sm:block"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+            <a href="#agendamento" class="btn-primary text-white px-5 py-2.5 rounded-md text-sm font-semibold ml-2">Agendar Agora</a>
         </div>
     </nav>
 
-    <section id="inicio" class="relative min-h-[90vh] flex items-center justify-center px-6 overflow-hidden pt-10">
-        <div class="text-center z-10 w-full max-w-4xl mx-auto" data-aos="fade-up" data-aos-duration="1200">
-            <span class="inline-block px-4 py-1.5 mb-8 border border-[#D4AF37]/30 text-[#D4AF37] rounded-full text-[9px] uppercase tracking-[0.3em] bg-white/50 backdrop-blur-sm">
-                Nail Art & Wellness
-            </span>
-            
-            <div class="mb-8 flex justify-center">
-                <img src="logo.png" alt="Estudio J&A" class="logo-hero">
+    <section id="inicio" class="relative py-20 px-6 flex flex-col items-center justify-center min-h-[85vh]">
+        <div class="text-center z-10 w-full max-w-3xl mx-auto">
+            <div class="inline-flex items-center gap-2 px-5 py-2 mb-8 glass-panel border border-gray-200 rounded-full text-xs font-medium text-[#61525A] shadow-sm">
+                <i data-lucide="sparkles" class="w-4 h-4"></i> Beleza e Elegância
             </div>
             
-            <p class="text-lg md:text-2xl italic text-[#8B7E74] mb-12 max-w-2xl mx-auto font-light leading-relaxed">
+            <div class="mb-6 flex justify-center">
+                <img src="logo.png" alt="Estudio J&A" class="h-28 md:h-48 w-auto object-contain logo-blend drop-shadow-lg">
+            </div>
+            
+            <p class="text-lg md:text-xl text-[#61525A] mb-10 max-w-2xl mx-auto font-medium">
                 Especialistas em manicure, pedicure, unhas de gel e nail art. Qualidade, higiene e atendimento personalizado.
             </p>
             
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-5 mb-20">
-                <a href="#agendamento" class="btn-primary text-white px-10 py-4 rounded-full font-bold uppercase text-[11px] tracking-widest shadow-xl flex items-center justify-center gap-2 w-full sm:w-auto">
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
+                <a href="#agendamento" class="btn-primary text-white px-8 py-4 rounded-md text-sm font-semibold flex items-center justify-center gap-2 w-full sm:w-auto shadow-md">
                     Agendar Horário <i data-lucide="arrow-right" class="w-4 h-4"></i>
                 </a>
-                <a href="#servicos" class="bg-white/50 backdrop-blur-sm border border-[#5D5050] text-[#5D5050] px-10 py-4 rounded-full font-bold uppercase text-[11px] tracking-widest hover:bg-[#5D5050] hover:text-white transition w-full sm:w-auto">
+                <a href="#servicos" class="bg-white/80 backdrop-blur-sm border border-[#61525A] text-[#61525A] px-8 py-4 rounded-md text-sm font-semibold hover:bg-white transition w-full sm:w-auto shadow-sm">
                     Ver Serviços
                 </a>
             </div>
 
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 border-t border-gray-200 pt-12 opacity-80 max-w-3xl mx-auto">
-                <div><h3 class="text-2xl md:text-3xl font-bold text-[#5D5050]">5+</h3><p class="text-[9px] uppercase tracking-widest text-gray-500 mt-1">Anos de Experiência</p></div>
-                <div><h3 class="text-2xl md:text-3xl font-bold text-[#5D5050]">2000+</h3><p class="text-[9px] uppercase tracking-widest text-gray-500 mt-1">Clientes Satisfeitas</p></div>
-                <div><h3 class="text-2xl md:text-3xl font-bold text-[#5D5050]">100%</h3><p class="text-[9px] uppercase tracking-widest text-gray-500 mt-1">Produtos Premium</p></div>
-                <div><h3 class="text-2xl md:text-3xl font-bold text-[#5D5050]">4.9 <span class="text-[#D4AF37] text-xl">★</span></h3><p class="text-[9px] uppercase tracking-widest text-gray-500 mt-1">Avaliação Média</p></div>
-            </div>
-        </div>
-        
-        <div class="absolute top-1/4 -left-20 w-96 h-96 bg-[#D4AF37]/5 rounded-full blur-[100px] pointer-events-none"></div>
-        <div class="absolute bottom-1/4 -right-20 w-96 h-96 bg-[#5D5050]/5 rounded-full blur-[100px] pointer-events-none"></div>
-    </section>
-
-    <section class="py-20 bg-white/60 border-y border-gray-100">
-        <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-12 text-center">
-            <div data-aos="fade-up" data-aos-delay="100">
-                <i data-lucide="sparkles" class="w-8 h-8 mx-auto mb-4 text-[#D4AF37]"></i>
-                <h4 class="font-bold text-sm uppercase mb-3 text-[#5D5050]">Profissionais Qualificadas</h4>
-                <p class="text-xs text-gray-500 leading-relaxed px-4">Equipe altamente treinada e com vasta experiência em tendências internacionais.</p>
-            </div>
-            <div data-aos="fade-up" data-aos-delay="200">
-                <i data-lucide="shield-check" class="w-8 h-8 mx-auto mb-4 text-[#D4AF37]"></i>
-                <h4 class="font-bold text-sm uppercase mb-3 text-[#5D5050]">Higiene Impecável</h4>
-                <p class="text-xs text-gray-500 leading-relaxed px-4">Todos os instrumentos são esterilizados em autoclave com materiais 100% descartáveis.</p>
-            </div>
-            <div data-aos="fade-up" data-aos-delay="300">
-                <i data-lucide="gem" class="w-8 h-8 mx-auto mb-4 text-[#D4AF37]"></i>
-                <h4 class="font-bold text-sm uppercase mb-3 text-[#5D5050]">Produtos Premium</h4>
-                <p class="text-xs text-gray-500 leading-relaxed px-4">Utilizamos apenas as melhores marcas do mercado para garantir durabilidade e brilho.</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 max-w-3xl mx-auto">
+                <div class="glass-panel p-4 rounded-2xl border border-gray-100 shadow-sm"><h3 class="text-3xl font-bold text-[#61525A]">5+</h3><p class="text-xs text-gray-500 mt-1">Anos de Experiência</p></div>
+                <div class="glass-panel p-4 rounded-2xl border border-gray-100 shadow-sm"><h3 class="text-3xl font-bold text-[#61525A]">2000+</h3><p class="text-xs text-gray-500 mt-1">Clientes Satisfeitas</p></div>
+                <div class="glass-panel p-4 rounded-2xl border border-gray-100 shadow-sm"><h3 class="text-3xl font-bold text-[#61525A]">100%</h3><p class="text-xs text-gray-500 mt-1">Produtos Premium</p></div>
+                <div class="glass-panel p-4 rounded-2xl border border-gray-100 shadow-sm"><h3 class="text-3xl font-bold text-[#61525A]">4.9</h3><p class="text-xs text-gray-500 mt-1">Avaliação Média</p></div>
             </div>
         </div>
     </section>
 
-    <section id="servicos" class="py-24 px-6">
+    <section id="servicos" class="py-24 px-6 bg-white/70">
         <div class="max-w-7xl mx-auto">
-            <div class="mb-16 text-center" data-aos="fade-up">
-                <h2 class="text-4xl font-bold mb-4">Nossos Serviços</h2>
-                <p class="text-gray-500 italic mb-6">Oferecemos uma gama completa de serviços de beleza para suas mãos e pés</p>
-                <div class="w-16 h-[2px] bg-[#D4AF37] mx-auto"></div>
+            <div class="mb-16 text-center">
+                <h2 class="text-4xl font-bold mb-3 text-[#2D2424]">Nossos Serviços</h2>
+                <p class="text-lg text-gray-500 max-w-xl mx-auto">Oferecemos uma gama completa de serviços de beleza para as suas mãos e pés.</p>
             </div>
             
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center text-center hover:shadow-xl transition duration-300 group" data-aos="zoom-in" data-aos-delay="100">
-                    <div class="w-14 h-14 bg-gray-50 rounded-full flex items-center justify-center mb-6 group-hover:bg-[#5D5050] transition">
-                        <i data-lucide="hand" class="text-gray-400 group-hover:text-white transition"></i>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white p-8 rounded-2xl border border-gray-100 card-hover flex flex-col items-start shadow-sm">
+                    <div class="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center mb-6 text-[#61525A]"><i data-lucide="hand" class="w-6 h-6"></i></div>
+                    <h3 class="text-xl font-bold mb-2">Manicure</h3>
+                    <p class="text-sm text-gray-500 mb-6 flex-grow leading-relaxed">Cuidado completo das unhas das mãos com esmaltação impecável.</p>
+                    <div class="w-full space-y-1 mb-6">
+                        <p class="text-[#61525A] font-bold text-lg flex items-center gap-2"><i data-lucide="tag" class="w-4 h-4"></i> R$ 45,00</p>
+                        <p class="text-xs text-gray-400 flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4"></i> 45 min</p>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">Manicure</h3>
-                    <p class="text-xs text-gray-500 mb-6 leading-relaxed flex-grow">Cuidado completo das unhas das mãos com esmaltação impecável.</p>
-                    <div class="w-full">
-                        <p class="text-[#5D5050] font-bold text-lg mb-1">R$ 45,00</p>
-                        <p class="text-[10px] text-gray-400 flex items-center justify-center gap-1 mb-6"><i data-lucide="clock" class="w-3 h-3"></i> 45 min</p>
-                        <a href="#agendamento" class="block w-full bg-[#5D5050] text-white py-3 rounded-lg text-[11px] font-bold uppercase tracking-wider hover:bg-[#4A3F3F] transition">Agendar</a>
-                    </div>
+                    <a href="#agendamento" class="block w-full bg-[#61525A] text-white text-center py-3 rounded-md text-sm font-semibold hover:bg-[#4A3E45] transition">Agendar</a>
                 </div>
 
-                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center text-center hover:shadow-xl transition duration-300 group" data-aos="zoom-in" data-aos-delay="200">
-                    <div class="w-14 h-14 bg-gray-50 rounded-full flex items-center justify-center mb-6 group-hover:bg-[#5D5050] transition">
-                        <i data-lucide="footprints" class="text-gray-400 group-hover:text-white transition"></i>
+                <div class="bg-white p-8 rounded-2xl border border-gray-100 card-hover flex flex-col items-start shadow-sm">
+                    <div class="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center mb-6 text-[#61525A]"><i data-lucide="footprints" class="w-6 h-6"></i></div>
+                    <h3 class="text-xl font-bold mb-2">Pedicure</h3>
+                    <p class="text-sm text-gray-500 mb-6 flex-grow leading-relaxed">Tratamento completo para os pés com hidratação profunda.</p>
+                    <div class="w-full space-y-1 mb-6">
+                        <p class="text-[#61525A] font-bold text-lg flex items-center gap-2"><i data-lucide="tag" class="w-4 h-4"></i> R$ 55,00</p>
+                        <p class="text-xs text-gray-400 flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4"></i> 60 min</p>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">Pedicure</h3>
-                    <p class="text-xs text-gray-500 mb-6 leading-relaxed flex-grow">Tratamento completo para os pés com hidratação profunda.</p>
-                    <div class="w-full">
-                        <p class="text-[#5D5050] font-bold text-lg mb-1">R$ 55,00</p>
-                        <p class="text-[10px] text-gray-400 flex items-center justify-center gap-1 mb-6"><i data-lucide="clock" class="w-3 h-3"></i> 60 min</p>
-                        <a href="#agendamento" class="block w-full bg-[#5D5050] text-white py-3 rounded-lg text-[11px] font-bold uppercase tracking-wider hover:bg-[#4A3F3F] transition">Agendar</a>
-                    </div>
+                    <a href="#agendamento" class="block w-full bg-[#61525A] text-white text-center py-3 rounded-md text-sm font-semibold hover:bg-[#4A3E45] transition">Agendar</a>
                 </div>
 
-                <div class="bg-white p-8 rounded-2xl shadow-lg border-2 border-[#D4AF37]/30 flex flex-col items-center text-center transform md:-translate-y-4 hover:shadow-2xl transition duration-300 group relative" data-aos="zoom-in" data-aos-delay="300">
-                    <div class="absolute -top-3 bg-[#D4AF37] text-white text-[9px] font-bold uppercase tracking-widest px-4 py-1 rounded-full">Mais Pedido</div>
-                    <div class="w-14 h-14 bg-[#FDFBF9] rounded-full flex items-center justify-center mb-6">
-                        <i data-lucide="sparkles" class="text-[#D4AF37]"></i>
+                <div class="bg-white p-8 rounded-2xl border border-gray-100 card-hover flex flex-col items-start relative shadow-lg transform md:-translate-y-2">
+                    <div class="absolute -top-3 left-8 bg-[#61525A] text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full">Mais Pedido</div>
+                    <div class="w-12 h-12 bg-[#FDFBF9] rounded-full flex items-center justify-center mb-6 text-[#61525A]"><i data-lucide="sparkles" class="w-6 h-6"></i></div>
+                    <h3 class="text-xl font-bold mb-2">Unhas de Gel</h3>
+                    <p class="text-sm text-gray-500 mb-6 flex-grow leading-relaxed">Alongamento e fortalecimento com gel de alta qualidade.</p>
+                    <div class="w-full space-y-1 mb-6">
+                        <p class="text-[#61525A] font-bold text-lg flex items-center gap-2"><i data-lucide="tag" class="w-4 h-4"></i> R$ 120,00</p>
+                        <p class="text-xs text-gray-400 flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4"></i> 90 min</p>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">Unhas de Gel</h3>
-                    <p class="text-xs text-gray-500 mb-6 leading-relaxed flex-grow">Alongamento e fortalecimento com gel de alta qualidade e durabilidade.</p>
-                    <div class="w-full">
-                        <p class="text-[#5D5050] font-bold text-lg mb-1">R$ 120,00</p>
-                        <p class="text-[10px] text-gray-400 flex items-center justify-center gap-1 mb-6"><i data-lucide="clock" class="w-3 h-3"></i> 90 min</p>
-                        <a href="#agendamento" class="block w-full bg-[#5D5050] text-white py-3 rounded-lg text-[11px] font-bold uppercase tracking-wider hover:bg-[#4A3F3F] transition">Agendar</a>
-                    </div>
+                    <a href="#agendamento" class="block w-full btn-primary text-white text-center py-3 rounded-md text-sm font-semibold shadow-md">Agendar</a>
                 </div>
 
-                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center text-center hover:shadow-xl transition duration-300 group" data-aos="zoom-in" data-aos-delay="400">
-                    <div class="w-14 h-14 bg-gray-50 rounded-full flex items-center justify-center mb-6 group-hover:bg-[#5D5050] transition">
-                        <i data-lucide="palette" class="text-gray-400 group-hover:text-white transition"></i>
+                <div class="bg-white p-8 rounded-2xl border border-gray-100 card-hover flex flex-col items-start shadow-sm">
+                    <div class="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center mb-6 text-[#61525A]"><i data-lucide="palette" class="w-6 h-6"></i></div>
+                    <h3 class="text-xl font-bold mb-2">Nail Art</h3>
+                    <p class="text-sm text-gray-500 mb-6 flex-grow leading-relaxed">Arte personalizada nas suas unhas com designs exclusivos.</p>
+                    <div class="w-full space-y-1 mb-6">
+                        <p class="text-[#61525A] font-bold text-lg flex items-center gap-2"><i data-lucide="tag" class="w-4 h-4"></i> A partir R$ 80</p>
+                        <p class="text-xs text-gray-400 flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4"></i> 60-90 min</p>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">Nail Art</h3>
-                    <p class="text-xs text-gray-500 mb-6 leading-relaxed flex-grow">Arte personalizada em suas unhas com designs exclusivos.</p>
-                    <div class="w-full">
-                        <p class="text-[#5D5050] font-bold text-lg mb-1">A partir R$ 80,00</p>
-                        <p class="text-[10px] text-gray-400 flex items-center justify-center gap-1 mb-6"><i data-lucide="clock" class="w-3 h-3"></i> 60-90 min</p>
-                        <a href="#agendamento" class="block w-full bg-[#5D5050] text-white py-3 rounded-lg text-[11px] font-bold uppercase tracking-wider hover:bg-[#4A3F3F] transition">Agendar</a>
-                    </div>
+                    <a href="#agendamento" class="block w-full bg-[#61525A] text-white text-center py-3 rounded-md text-sm font-semibold hover:bg-[#4A3E45] transition">Agendar</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="galeria" class="py-24 px-6 bg-[#FDFBF9] border-t border-gray-100">
-        <div class="max-w-7xl mx-auto text-center">
-            <div data-aos="fade-up">
-                <h2 class="text-4xl font-bold mb-2">Galeria de Trabalhos</h2>
-                <p class="text-gray-500 mb-10 italic">Confira alguns dos nossos trabalhos mais recentes</p>
-            </div>
-            
-            <div class="flex justify-center gap-3 mb-12 flex-wrap" data-aos="fade-up" data-aos-delay="100">
-                <button class="px-6 py-2 bg-[#5D5050] text-white rounded-full text-[10px] font-bold uppercase tracking-widest shadow-md">Todos</button>
-                <button class="px-6 py-2 bg-white text-gray-500 border border-gray-200 rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-gray-50 transition">Nail Art</button>
-                <button class="px-6 py-2 bg-white text-gray-500 border border-gray-200 rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-gray-50 transition">Manicure</button>
-                <button class="px-6 py-2 bg-white text-gray-500 border border-gray-200 rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-gray-50 transition hidden sm:inline-block">Unhas de Gel</button>
-            </div>
-
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-                <div class="overflow-hidden rounded-2xl aspect-square shadow-sm" data-aos="zoom-in" data-aos-delay="100">
-                    <img src="https://images.unsplash.com/photo-1604654894610-df490668f804?q=80&w=600" alt="Nail Art Trabalho 1" class="w-full h-full object-cover hover:scale-110 transition duration-500 cursor-pointer">
+    <section class="py-16">
+        <div class="glass-panel rounded-3xl max-w-5xl mx-auto px-8 py-12 border border-gray-200 shadow-lg mb-10">
+            <h3 class="text-3xl font-bold text-center mb-12 text-[#2D2424]">Por que escolher o Estudio J&A?</h3>
+            <div class="grid md:grid-cols-3 gap-10 text-center">
+                <div>
+                    <div class="w-14 h-14 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm text-[#61525A]"><i data-lucide="star" class="w-7 h-7"></i></div>
+                    <h4 class="font-bold text-base mb-2 text-[#2D2424]">Profissionais Qualificadas</h4>
+                    <p class="text-sm text-gray-500 px-4 leading-relaxed">Equipe altamente treinada e com vasta experiência.</p>
                 </div>
-                <div class="overflow-hidden rounded-2xl aspect-square shadow-sm" data-aos="zoom-in" data-aos-delay="200">
-                    <img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?q=80&w=600" alt="Nail Art Trabalho 2" class="w-full h-full object-cover hover:scale-110 transition duration-500 cursor-pointer">
+                <div>
+                    <div class="w-14 h-14 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm text-[#61525A]"><i data-lucide="shield-check" class="w-7 h-7"></i></div>
+                    <h4 class="font-bold text-base mb-2 text-[#2D2424]">Higiene Impecável</h4>
+                    <p class="text-sm text-gray-500 px-4 leading-relaxed">Instrumentos 100% esterilizados e descartáveis.</p>
                 </div>
-                <div class="overflow-hidden rounded-2xl aspect-square shadow-sm" data-aos="zoom-in" data-aos-delay="300">
-                    <img src="https://images.unsplash.com/photo-1519014816548-bf5fe059798b?q=80&w=600" alt="Nail Art Trabalho 3" class="w-full h-full object-cover hover:scale-110 transition duration-500 cursor-pointer">
+                <div>
+                    <div class="w-14 h-14 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm text-[#61525A]"><i data-lucide="gem" class="w-7 h-7"></i></div>
+                    <h4 class="font-bold text-base mb-2 text-[#2D2424]">Produtos Premium</h4>
+                    <p class="text-sm text-gray-500 px-4 leading-relaxed">Utilizamos apenas as melhores marcas do mercado.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="agendamento" class="py-24 px-6 bg-white border-t border-gray-100">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="text-4xl font-bold mb-4">Agende seu Horário</h2>
-                <p class="text-gray-500 italic">Preencha o formulário abaixo e garanta seu atendimento exclusivo.</p>
+    <section id="galeria" class="py-24 px-6 bg-white/70 border-y border-gray-200/50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold mb-3 text-[#2D2424]">Galeria de Trabalhos</h2>
+                <p class="text-lg text-gray-500">Confira alguns dos nossos trabalhos mais recentes</p>
+            </div>
+            
+            <div class="flex justify-center gap-3 mb-10 flex-wrap" id="filter-buttons">
+                <button type="button" class="filter-btn active bg-[#61525A] text-white px-6 py-2 rounded-full text-sm font-medium transition shadow-sm border border-[#61525A] cursor-pointer" data-filter="todos">Todos</button>
+                <button type="button" class="filter-btn bg-white text-[#61525A] hover:bg-gray-50 px-6 py-2 rounded-full text-sm font-medium transition shadow-sm border border-gray-200 cursor-pointer" data-filter="nail-art">Nail Art</button>
+                <button type="button" class="filter-btn bg-white text-[#61525A] hover:bg-gray-50 px-6 py-2 rounded-full text-sm font-medium transition shadow-sm border border-gray-200 cursor-pointer" data-filter="manicure">Manicure</button>
+                <button type="button" class="filter-btn bg-white text-[#61525A] hover:bg-gray-50 px-6 py-2 rounded-full text-sm font-medium transition shadow-sm border border-gray-200 cursor-pointer" data-filter="unhas-gel">Unhas de Gel</button>
+                <button type="button" class="filter-btn bg-white text-[#61525A] hover:bg-gray-50 px-6 py-2 rounded-full text-sm font-medium transition shadow-sm border border-gray-200 cursor-pointer" data-filter="pedicure">Pedicure</button>
             </div>
 
-            <div class="grid md:grid-cols-2 gap-12 lg:gap-20 items-start">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="gallery-grid">
                 
-                <div class="bg-[#FDFBF9] p-8 md:p-10 rounded-3xl shadow-xl border border-gray-100" data-aos="fade-right">
-                    <h3 class="text-xl font-bold mb-6 text-[#5D5050] border-b border-gray-200 pb-4">Dados do Agendamento</h3>
+                <div class="gallery-item overflow-hidden rounded-2xl aspect-square shadow-md border border-gray-100 relative group cursor-pointer" data-category="unhas-gel">
+                    <img src="https://images.unsplash.com/photo-1604654894610-df490668f804?auto=format&fit=crop&w=600&q=80" alt="Unhas de Gel" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4"><span class="text-white font-medium">Unhas de Gel</span></div>
+                </div>
+
+                <div class="gallery-item overflow-hidden rounded-2xl aspect-square shadow-md border border-gray-100 relative group cursor-pointer" data-category="nail-art">
+                    <img src="https://images.unsplash.com/photo-1519014816548-bf5fe059798b?auto=format&fit=crop&w=600&q=80" alt="Nail Art" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4"><span class="text-white font-medium">Nail Art</span></div>
+                </div>
+
+                <div class="gallery-item overflow-hidden rounded-2xl aspect-square shadow-md border border-gray-100 relative group cursor-pointer" data-category="manicure">
+                    <img src="https://images.unsplash.com/photo-1522337660859-02fbefca4702?auto=format&fit=crop&w=600&q=80" alt="Manicure" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4"><span class="text-white font-medium">Manicure</span></div>
+                </div>
+
+                <div class="gallery-item overflow-hidden rounded-2xl aspect-square shadow-md border border-gray-100 relative group cursor-pointer" data-category="pedicure">
+                    <img src="https://images.unsplash.com/photo-1534349762230-e0cadf78f5da?auto=format&fit=crop&w=600&q=80" alt="Pedicure" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4"><span class="text-white font-medium">Pedicure</span></div>
+                </div>
+
+                <div class="gallery-item overflow-hidden rounded-2xl aspect-square shadow-md border border-gray-100 relative group cursor-pointer" data-category="nail-art">
+                    <img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=600&q=80" alt="Nail Art" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4"><span class="text-white font-medium">Nail Art</span></div>
+                </div>
+
+                <div class="gallery-item overflow-hidden rounded-2xl aspect-square shadow-md border border-gray-100 relative group cursor-pointer" data-category="unhas-gel">
+                    <img src="https://images.unsplash.com/photo-1595868337722-6e2168fa5f73?auto=format&fit=crop&w=600&q=80" alt="Unhas de Gel" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4"><span class="text-white font-medium">Unhas de Gel</span></div>
+                </div>
+
+                <div class="gallery-item overflow-hidden rounded-2xl aspect-square shadow-md border border-gray-100 relative group cursor-pointer" data-category="manicure">
+                    <img src="https://images.unsplash.com/photo-1629881691147-38e932bfaee7?auto=format&fit=crop&w=600&q=80" alt="Manicure" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4"><span class="text-white font-medium">Manicure</span></div>
+                </div>
+
+                <div class="gallery-item overflow-hidden rounded-2xl aspect-square shadow-md border border-gray-100 relative group cursor-pointer" data-category="nail-art">
+                    <img src="https://images.unsplash.com/photo-1620023604080-6ea7247a327e?auto=format&fit=crop&w=600&q=80" alt="Nail Art" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4"><span class="text-white font-medium">Nail Art</span></div>
+                </div>
+
+                <div class="gallery-item overflow-hidden rounded-2xl aspect-square shadow-md border border-gray-100 relative group cursor-pointer" data-category="pedicure">
+                    <img src="https://images.unsplash.com/photo-1542458428-fb4532c544bd?auto=format&fit=crop&w=600&q=80" alt="Pedicure" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4"><span class="text-white font-medium">Pedicure</span></div>
+                </div>
+
+                <div class="gallery-item overflow-hidden rounded-2xl aspect-square shadow-md border border-gray-100 relative group cursor-pointer" data-category="unhas-gel">
+                    <img src="https://images.unsplash.com/photo-1588661605335-5136cb203309?auto=format&fit=crop&w=600&q=80" alt="Unhas de Gel" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4"><span class="text-white font-medium">Unhas de Gel</span></div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="agendamento" class="py-24 px-6">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 text-[#2D2424]">Agende seu Horário</h2>
+                <p class="text-lg text-gray-500">Preencha o formulário abaixo e garanta seu atendimento</p>
+            </div>
+
+            <div class="bg-white p-8 md:p-10 rounded-2xl shadow-xl border border-gray-200">
+                <h3 class="text-2xl font-semibold mb-2 text-[#2D2424]">Dados do Agendamento</h3>
+                <p class="text-sm text-gray-500 mb-8">Todos os campos são obrigatórios</p>
+                
+                <form id="form-agendamento" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-[#2D2424] mb-2 flex items-center gap-2"><i data-lucide="user" class="w-4 h-4 text-[#61525A]"></i> Nome Completo</label>
+                            <input type="text" id="nome" placeholder="Seu nome" required class="w-full px-4 py-2.5 bg-transparent border-2 border-gray-200 rounded-lg focus:border-[#61525A] outline-none transition">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-[#2D2424] mb-2 flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4 text-[#61525A]"></i> E-mail</label>
+                            <input type="email" id="email" placeholder="seu@email.com" class="w-full px-4 py-2.5 bg-transparent border-2 border-gray-200 rounded-lg focus:border-[#61525A] outline-none transition">
+                        </div>
+                    </div>
                     
-                    <form id="form-agendamento" class="space-y-6">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-[10px] font-bold uppercase text-gray-500 mb-2 tracking-widest flex items-center gap-2"><i data-lucide="user" class="w-3 h-3 text-[#D4AF37]"></i> Nome Completo</label>
-                                <input type="text" id="nome" placeholder="Seu nome" required class="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#D4AF37] outline-none text-sm transition">
-                            </div>
-                            <div>
-                                <label class="block text-[10px] font-bold uppercase text-gray-500 mb-2 tracking-widest flex items-center gap-2"><i data-lucide="mail" class="w-3 h-3 text-[#D4AF37]"></i> E-mail</label>
-                                <input type="email" id="email" placeholder="seu@email.com" class="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#D4AF37] outline-none text-sm transition">
-                            </div>
-                        </div>
-                        
+                    <div>
+                        <label class="block text-sm font-medium text-[#2D2424] mb-2 flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-[#61525A]"></i> Telefone</label>
+                        <input type="tel" id="telefone" placeholder="(11) 98765-4321" required class="w-full px-4 py-2.5 bg-transparent border-2 border-gray-200 rounded-lg focus:border-[#61525A] outline-none transition">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-[#2D2424] mb-2 flex items-center gap-2"><i data-lucide="sparkles" class="w-4 h-4 text-[#61525A]"></i> Serviço Desejado</label>
+                        <select id="servico" required class="w-full px-4 py-2.5 bg-transparent border-2 border-gray-200 rounded-lg outline-none focus:border-[#61525A] text-gray-700 transition">
+                            <option value="">Selecione um serviço...</option>
+                            <option value="Manicure">Manicure - R$ 45,00</option>
+                            <option value="Pedicure">Pedicure - R$ 55,00</option>
+                            <option value="Unhas de Gel">Unhas de Gel - R$ 120,00</option>
+                            <option value="Nail Art">Nail Art - A partir de R$ 80,00</option>
+                        </select>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-6">
                         <div>
-                            <label class="block text-[10px] font-bold uppercase text-gray-500 mb-2 tracking-widest flex items-center gap-2"><i data-lucide="phone" class="w-3 h-3 text-[#D4AF37]"></i> WhatsApp</label>
-                            <input type="tel" id="telefone" placeholder="(11) 98765-4321" required class="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#D4AF37] outline-none text-sm transition">
+                            <label class="block text-sm font-medium text-[#2D2424] mb-2 flex items-center gap-2"><i data-lucide="calendar" class="w-4 h-4 text-[#61525A]"></i> Data</label>
+                            <input type="date" id="data_agendamento" required class="w-full px-4 py-2.5 bg-transparent border-2 border-gray-200 rounded-lg focus:border-[#61525A] outline-none transition text-gray-600">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-[#2D2424] mb-2 flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4 text-[#61525A]"></i> Horário</label>
+                            <input type="time" id="horario_agendamento" required class="w-full px-4 py-2.5 bg-transparent border-2 border-gray-200 rounded-lg focus:border-[#61525A] outline-none transition text-gray-600">
+                        </div>
+                    </div>
+
+                    <button type="submit" id="btn-submit" class="w-full btn-primary text-white py-4 rounded-lg font-medium text-lg mt-4 shadow-md">
+                        Confirmar Agendamento
+                    </button>
+                </form>
+            </div>
+
+            <div class="mt-8 text-center glass-panel py-4 rounded-xl border border-gray-200 shadow-sm">
+                <p class="text-sm text-gray-600">📱 Prefere agendar por WhatsApp? <a href="https://wa.me/5511987654321" target="_blank" class="font-bold text-[#61525A] hover:underline">Clique aqui</a></p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contato" class="py-24 px-6 bg-white/70 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 text-[#2D2424]">Entre em Contato</h2>
+                <p class="text-lg text-gray-500">Estamos prontas para atendê-la. Fale conosco!</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12 items-start">
+                
+                <div class="space-y-8">
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+                        <h3 class="text-2xl font-semibold mb-2 text-[#2D2424]">Informações de Contato</h3>
+                        <p class="text-sm text-gray-500 mb-8">Visite-nos ou entre em contato através dos canais abaixo</p>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center shrink-0 text-[#61525A]"><i data-lucide="map-pin" class="w-6 h-6"></i></div>
+                                <div>
+                                    <h4 class="font-semibold text-[#2D2424] mb-1">Endereço</h4>
+                                    <p class="text-sm text-gray-500">Rua das Flores, 123 - Centro<br>Moji-Mirim - SP</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center shrink-0 text-[#61525A]"><i data-lucide="phone" class="w-6 h-6"></i></div>
+                                <div>
+                                    <h4 class="font-semibold text-[#2D2424] mb-1">Telefone</h4>
+                                    <p class="text-sm text-gray-500 mb-1">(11) 98765-4321</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center shrink-0 text-[#61525A]"><i data-lucide="mail" class="w-6 h-6"></i></div>
+                                <div>
+                                    <h4 class="font-semibold text-[#2D2424] mb-1">E-mail</h4>
+                                    <p class="text-sm text-gray-500">contato@estudioja.com.br</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center shrink-0 text-[#61525A]"><i data-lucide="clock" class="w-6 h-6"></i></div>
+                                <div>
+                                    <h4 class="font-semibold text-[#2D2424] mb-1">Horário de Funcionamento</h4>
+                                    <p class="text-sm text-gray-500">Seg à Sex: 09h às 19h | Sáb: 09h às 17h</p>
+                                </div>
+                            </div>
                         </div>
 
-                        <div>
-                            <label class="block text-[10px] font-bold uppercase text-gray-500 mb-2 tracking-widest flex items-center gap-2"><i data-lucide="sparkles" class="w-3 h-3 text-[#D4AF37]"></i> Serviço Desejado</label>
-                            <select id="servico" required class="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-[#D4AF37] text-sm text-gray-600 transition">
-                                <option value="">Selecione um serviço...</option>
-                                <option value="Unhas de Gel">Unhas de Gel</option>
-                                <option value="Manicure">Manicure</option>
-                                <option value="Pedicure">Pedicure</option>
-                                <option value="Nail Art">Nail Art</option>
-                            </select>
-                        </div>
-                        
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-[10px] font-bold uppercase text-gray-500 mb-2 tracking-widest flex items-center gap-2"><i data-lucide="calendar" class="w-3 h-3 text-[#D4AF37]"></i> Data</label>
-                                <input type="date" id="data_agendamento" required class="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#D4AF37] outline-none text-sm text-gray-500">
-                            </div>
-                            <div>
-                                <label class="block text-[10px] font-bold uppercase text-gray-500 mb-2 tracking-widest flex items-center gap-2"><i data-lucide="clock" class="w-3 h-3 text-[#D4AF37]"></i> Horário</label>
-                                <input type="time" id="horario_agendamento" required class="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#D4AF37] outline-none text-sm text-gray-500">
+                        <div class="mt-8 pt-6 border-t border-gray-100">
+                            <h4 class="font-semibold text-[#2D2424] mb-4">Siga-nos nas Redes Sociais</h4>
+                            <div class="flex gap-4">
+                                <a href="https://www.instagram.com/estudio_yalexary/" target="_blank" class="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center text-[#61525A] hover:bg-[#61525A] hover:text-white transition"><i data-lucide="instagram" class="w-6 h-6"></i></a>
+                                <a href="https://www.facebook.com/joelma.maria.33886/" target="_blank" class="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center text-[#61525A] hover:bg-[#61525A] hover:text-white transition"><i data-lucide="facebook" class="w-6 h-6"></i></a>
                             </div>
                         </div>
+                    </div>
 
-                        <button type="submit" id="btn-submit" class="w-full btn-primary text-white py-4 rounded-xl font-bold uppercase tracking-[0.2em] text-[11px] mt-4 shadow-md">
-                            Confirmar Agendamento
+                    <a href="https://wa.me/5511987654321" target="_blank" class="block bg-[#25D366] rounded-2xl p-6 flex items-center justify-between shadow-lg hover:shadow-xl hover:-translate-y-1 transition duration-300">
+                        <div>
+                            <h4 class="font-semibold text-white text-lg mb-1">Fale Conosco no WhatsApp</h4>
+                            <p class="text-white/90 text-sm">Resposta rápida e atendimento personalizado</p>
+                        </div>
+                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center shrink-0 text-[#25D366]">
+                            <i data-lucide="phone" class="w-6 h-6"></i>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="bg-white p-8 md:p-10 rounded-2xl shadow-lg border border-gray-100 h-full">
+                    <h3 class="text-2xl font-semibold mb-2 text-[#2D2424]">Envie uma Mensagem</h3>
+                    <p class="text-sm text-gray-500 mb-8">Preencha o formulário e retornaremos o mais breve possível</p>
+                    
+                    <form class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium text-[#2D2424] mb-2">Nome</label>
+                            <input type="text" placeholder="Seu nome" class="w-full px-4 py-2.5 bg-transparent border-2 border-gray-200 rounded-lg outline-none focus:border-[#61525A] text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-[#2D2424] mb-2">E-mail</label>
+                            <input type="email" placeholder="seu@email.com" class="w-full px-4 py-2.5 bg-transparent border-2 border-gray-200 rounded-lg outline-none focus:border-[#61525A] text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-[#2D2424] mb-2">Mensagem</label>
+                            <textarea rows="6" placeholder="Digite sua mensagem..." class="w-full px-4 py-2.5 bg-transparent border-2 border-gray-200 rounded-lg outline-none focus:border-[#61525A] text-sm resize-none"></textarea>
+                        </div>
+                        <button type="button" onclick="alert('Mensagem enviada com sucesso!')" class="w-full btn-primary text-white py-4 rounded-lg font-medium text-lg flex justify-center items-center gap-2 shadow-md">
+                            <i data-lucide="send" class="w-5 h-5"></i> Enviar Mensagem
                         </button>
                     </form>
                 </div>
 
-                <div class="space-y-10" data-aos="fade-left">
-                    <div>
-                        <h2 class="text-3xl font-bold mb-4">Entre em Contato</h2>
-                        <p class="text-gray-500 text-sm leading-relaxed mb-8">Visite-nos ou entre em contato através dos canais abaixo para agendamentos diretos.</p>
-                    </div>
-
-                    <div class="bg-[#FDFBF9] p-6 rounded-2xl border border-gray-100 shadow-sm flex items-start gap-4 hover:shadow-md transition">
-                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center shrink-0 border border-gray-50"><i data-lucide="map-pin" class="w-5 h-5 text-[#D4AF37]"></i></div>
-                        <div>
-                            <h4 class="font-bold text-sm text-[#5D5050] mb-1">Endereço</h4>
-                            <p class="text-xs text-gray-500">Rua das Flores, 123 - Centro<br>Moji-Mirim - SP</p>
-                        </div>
-                    </div>
-
-                    <div class="bg-[#FDFBF9] p-6 rounded-2xl border border-gray-100 shadow-sm flex items-start gap-4 hover:shadow-md transition">
-                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center shrink-0 border border-gray-50"><i data-lucide="phone" class="w-5 h-5 text-[#D4AF37]"></i></div>
-                        <div>
-                            <h4 class="font-bold text-sm text-[#5D5050] mb-1">Telefone & E-mail</h4>
-                            <p class="text-xs text-gray-500 mb-1">(11) 999999999</p>
-                            <p class="text-xs text-gray-500">contato@estudioja.com.br</p>
-                        </div>
-                    </div>
-
-                    <div class="bg-[#FDFBF9] p-6 rounded-2xl border border-gray-100 shadow-sm flex items-start gap-4 hover:shadow-md transition">
-                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center shrink-0 border border-gray-50"><i data-lucide="clock" class="w-5 h-5 text-[#D4AF37]"></i></div>
-                        <div>
-                            <h4 class="font-bold text-sm text-[#5D5050] mb-1">Horário de Funcionamento</h4>
-                            <p class="text-xs text-gray-500 mb-1">Seg à Sex: 09h às 19h</p>
-                            <p class="text-xs text-gray-500">Sáb: 09h às 17h</p>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
 
-    <footer class="bg-[#FDFBF9] pt-20 pb-10 px-8 border-t border-gray-200">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-            
-            <div>
-                <img src="logo.png" alt="Estudio J&A" class="h-16 w-auto object-contain mb-6 mix-blend-multiply">
-                <p class="text-[11px] text-gray-500 leading-relaxed tracking-wide pr-4">
-                    Transformando suas unhas em obras de arte. Excelência, higiene e luxo em cada detalhe para o seu bem-estar.
-                </p>
-            </div>
-
-            <div>
-                <h4 class="text-[11px] font-bold uppercase tracking-[0.2em] mb-8 text-[#2D2424]">Institucional</h4>
-                <ul class="space-y-4 text-[11px] text-gray-500 uppercase tracking-widest font-medium">
-                    <li><a href="#" class="hover:text-[#D4AF37] transition flex items-center gap-2"><i data-lucide="chevron-right" class="w-3 h-3 text-[#D4AF37]"></i> Sobre a Empresa</a></li>
-                    <li><a href="#" class="hover:text-[#D4AF37] transition flex items-center gap-2"><i data-lucide="chevron-right" class="w-3 h-3 text-[#D4AF37]"></i> Biossegurança</a></li>
-                    <li><a href="#" class="hover:text-[#D4AF37] transition flex items-center gap-2"><i data-lucide="chevron-right" class="w-3 h-3 text-[#D4AF37]"></i> Políticas</a></li>
-                </ul>
-            </div>
-
-            <div>
-                <h4 class="text-[11px] font-bold uppercase tracking-[0.2em] mb-8 text-[#2D2424]">Formas de Pagamento</h4>
-                <div class="flex flex-wrap gap-2 opacity-60">
-                    <div class="w-10 h-6 bg-gray-200 rounded text-[7px] flex items-center justify-center font-bold text-gray-600">Debito</div>
-                    <div class="w-10 h-6 bg-gray-200 rounded text-[7px] flex items-center justify-center font-bold text-gray-600">Credito</div>
-                    <div class="w-10 h-6 bg-gray-200 rounded text-[7px] flex items-center justify-center font-bold text-gray-600">PIX</div>
-                </div>
-            </div>
-
-            <div>
-                <h4 class="text-[11px] font-bold uppercase tracking-[0.2em] mb-8 text-[#2D2424]">Segurança</h4>
-                <div class="space-y-3">
-                    <div class="bg-white border border-gray-200 p-3 rounded-lg flex items-center gap-3 shadow-sm inline-flex">
-                        <i data-lucide="shield-check" class="text-green-500 w-6 h-6"></i>
-                        <div class="text-left">
-                            <span class="block text-[8px] font-bold uppercase text-gray-400 leading-tight">Site Seguro</span>
-                            <span class="block text-[9px] font-bold text-[#2D2424] uppercase">Google Safe Browsing</span>
-                        </div>
+    <footer class="bg-white border-t-2 border-gray-100 pt-12 pb-8 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+                
+                <div>
+                    <img src="logo.png" alt="Estudio J&A" class="h-20 w-auto mb-4 object-contain logo-blend">
+                    <p class="text-sm text-gray-500 leading-relaxed">
+                        Transformando suas unhas em obras de arte desde 2019.
+                    </p>
+                    <div class="flex gap-3 mt-6">
+                        <a href="https://www.instagram.com/estudio_yalexary/" target="_blank" class="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center text-[#61525A] hover:opacity-80 transition"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                        <a href="https://www.facebook.com/joelma.maria.33886/" target="_blank" class="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center text-[#61525A] hover:opacity-80 transition"><i data-lucide="facebook" class="w-5 h-5"></i></a>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <div class="text-center border-t border-gray-200 pt-8 mt-8 flex flex-col md:flex-row justify-between items-center max-w-7xl mx-auto gap-4">
-            <p class="text-[10px] text-gray-400 uppercase tracking-widest">© 2026 Estudio J&A. Todos os direitos reservados.</p>
-            <p class="text-[10px] text-gray-400 uppercase tracking-widest flex items-center gap-1">Feito com <i data-lucide="heart" class="w-3 h-3 text-[#D4AF37]"></i> para você</p>
+                <div>
+                    <h4 class="font-semibold text-[#2D2424] mb-4">Links Rápidos</h4>
+                    <ul class="space-y-3 text-sm text-gray-500">
+                        <li><a href="#inicio" class="hover:underline hover:text-[#61525A]">Início</a></li>
+                        <li><a href="#servicos" class="hover:underline hover:text-[#61525A]">Serviços</a></li>
+                        <li><a href="#galeria" class="hover:underline hover:text-[#61525A]">Galeria</a></li>
+                        <li><a href="#agendamento" class="hover:underline hover:text-[#61525A]">Agendamento</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold text-[#2D2424] mb-4">Nossos Serviços</h4>
+                    <ul class="space-y-3 text-sm text-gray-500">
+                        <li>Manicure</li>
+                        <li>Pedicure</li>
+                        <li>Unhas de Gel</li>
+                        <li>Nail Art</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold text-[#2D2424] mb-4">Contato</h4>
+                    <ul class="space-y-3 text-sm text-gray-500">
+                        <li class="flex items-start gap-2"><i data-lucide="map-pin" class="w-4 h-4 mt-1 text-[#61525A]"></i> Rua das Flores, 123 - Centro<br>Moji-Mirim - SP</li>
+                        <li class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-[#61525A]"></i> (11) 98765-4321</li>
+                        <li class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4 text-[#61525A]"></i> contato@estudioja.com.br</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="glass-panel rounded-xl py-6 text-center border border-gray-200 mb-8 shadow-sm">
+                <p class="font-semibold text-[#2D2424] mb-1">Horário de Funcionamento</p>
+                <p class="text-sm text-gray-500">Seg à Sex: 09h às 19h | Sáb: 09h às 17h</p>
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-gray-100 gap-4">
+                <p class="text-sm text-gray-500">© 2026 Estudio J&A. Todos os direitos reservados.</p>
+                <p class="text-sm text-gray-500 flex items-center gap-1">Feito com <i data-lucide="heart" class="w-4 h-4 text-[#61525A]"></i> para você</p>
+            </div>
         </div>
     </footer>
 
-    <a href="https://wa.me/5511999999999" target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 transition duration-300 z-[200] flex items-center justify-center group" aria-label="Fale conosco no WhatsApp">
-        <i data-lucide="message-circle" class="w-7 h-7"></i>
-        <span class="absolute right-16 bg-white text-[#2D2424] text-[10px] font-bold uppercase tracking-widest px-4 py-2 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition duration-300 pointer-events-none whitespace-nowrap">
-            Fale Conosco
-        </span>
-    </a>
-
- 
     <script>
-        // 1 vai inicializar os icones da lucide
+        // 1. CARREGA ÍCONES
         lucide.createIcons();
-        
-     
 
-        // 3 CONFIGURAÇAO DO BANCO DE DADOS (DA SUPABASE)
-        // Substitua estas variáveis pelas chaves do seu projeto Supabase posteriormente
+        // 2. LÓGICA DO FILTRO DA GALERIA (BLINDADA)
+        document.addEventListener('DOMContentLoaded', () => {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    
+                    // Reseta as cores de todos os botões para branco
+                    filterBtns.forEach(f => {
+                        f.classList.remove('bg-[#61525A]', 'text-white', 'border-[#61525A]');
+                        f.classList.add('bg-white', 'text-[#61525A]', 'border-gray-200');
+                    });
+
+                    // Pinta apenas o botão clicado com a cor principal
+                    btn.classList.remove('bg-white', 'text-[#61525A]', 'border-gray-200');
+                    btn.classList.add('bg-[#61525A]', 'text-white', 'border-[#61525A]');
+
+                    // Descobre qual foi a categoria escolhida
+                    const filterValue = btn.getAttribute('data-filter');
+
+                    // Mostra ou esconde as fotos
+                    galleryItems.forEach(item => {
+                        if (filterValue === 'todos' || item.getAttribute('data-category') === filterValue) {
+                            item.style.display = 'block'; // Mostra o item
+                            setTimeout(() => { item.style.opacity = '1'; }, 10); // Efeito suave
+                        } else {
+                            item.style.opacity = '0'; // Esconde com efeito
+                            setTimeout(() => { item.style.display = 'none'; }, 300); // Remove o espaço vazio
+                        }
+                    });
+                });
+            });
+        });
+
+        // 3. LÓGICA DE AGENDAMENTO
         const supabaseUrl = 'SUA_URL_DO_SUPABASE';
         const supabaseKey = 'SUA_CHAVE_ANON_DO_SUPABASE';
-        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+        let supabase = null;
 
-        // 4. Logica do Formulario de agendamento
+        if (supabaseUrl.startsWith('http')) {
+            try {
+                supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+            } catch (e) {
+                console.warn('Supabase não conectado.');
+            }
+        }
+
         document.getElementById('form-agendamento').addEventListener('submit', async (e) => {
             e.preventDefault(); 
             const btn = document.getElementById('btn-submit');
@@ -389,7 +526,6 @@
             btn.innerHTML = "Enviando...";
             btn.disabled = true;
 
-            // coleta os dados digitadoos
             const dados = {
                 cliente_nome: document.getElementById('nome').value,
                 cliente_email: document.getElementById('email').value,
@@ -400,27 +536,21 @@
             };
 
             try {
-                // se a URL ainda for o texto de exemplo ele vai pular a etapa do banco
-                if(supabaseUrl !== 'SUA_URL_DO_SUPABASE') {
+                if(supabase) {
                    const { error } = await supabase.from('agendamentos').insert([dados]);
                    if (error) throw error;
                 }
-
-                // monta a mensagem para o zapzap
             
-                const numeroWhatsApp = "551199999999"; 
+                const numeroWhatsApp = "5511987654321"; 
                 const dataFormatada = dados.data_agendamento.split('-').reverse().join('/');
                 const textoWa = `Olá! Meu nome é ${dados.cliente_nome}. Gostaria de confirmar meu agendamento de *${dados.servico}* para o dia ${dataFormatada} às ${dados.horario_agendamento}.`;
                 
-                // abre o zap em nova aba
                 window.open(`https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(textoWa)}`, '_blank');
-                
-                // limpa o formulario apos o sucesso
                 document.getElementById('form-agendamento').reset();
 
             } catch (error) {
-                console.error('Erro ao agendar:', error);
-                alert("Não foi possível salvar no banco de dados, mas você será redirecionada para o WhatsApp para concluir o agendamento!");
+                console.error('Erro:', error);
+                alert("Ocorreu um erro, mas você será redirecionada para o WhatsApp!");
             } finally {
                 btn.innerHTML = originalText;
                 btn.disabled = false;
@@ -428,5 +558,4 @@
         });
     </script>
 </body>
-
 </html>
