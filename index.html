@@ -16,9 +16,9 @@
             color: #2D2424;
         }
         
-        /* Fundo de Mármore bem visível */
         .marble-pattern {
             background-color: #FDFBF9;
+            /* Se descarregar a textura de mármore e a guardar na pasta como marmore.png, pode alterar o link abaixo para: url('marmore.png') */
             background-image: linear-gradient(rgba(253, 251, 249, 0.50), rgba(253, 251, 249, 0.50)), url('https://www.transparenttextures.com/patterns/white-marble.png');
             background-attachment: fixed;
         }
@@ -32,7 +32,7 @@
             transform: translateY(-2px); 
             box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
         }
-        
+
         .card-hover:hover {
             box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.08);
             transform: translateY(-4px);
@@ -46,9 +46,14 @@
             backdrop-filter: blur(12px); 
         }
 
-        /* Classe para transição suave na galeria */
-        .gallery-item {
-            transition: opacity 0.3s ease;
+        /* GALERIA DAS FOTINHAAS  */
+       
+        .escondido { display: none !important; }
+        .visivel { display: block; animation: aparecer 0.4s ease-in-out; }
+        
+        @keyframes aparecer {
+            0% { opacity: 0; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1); }
         }
     </style>
 </head>
@@ -56,7 +61,7 @@
 
     <nav class="flex justify-between items-center px-6 md:px-12 py-3 glass-panel sticky top-0 z-[100] border-b border-gray-200/50 shadow-sm">
         <a href="#inicio" class="flex items-center shrink-0">
-            <img src="logo.png" alt="Logo Estudio J&A" class="h-10 md:h-14 w-auto object-contain logo-blend">
+            <img src="logo.jpg" alt="Logo Estudio J&A" class="h-10 md:h-14 w-auto object-contain logo-blend">
         </a>
         
         <div class="hidden lg:flex gap-8 text-[14px] font-medium text-gray-700">
@@ -81,7 +86,7 @@
             </div>
             
             <div class="mb-6 flex justify-center">
-                <img src="logo.png" alt="Estudio J&A" class="h-28 md:h-48 w-auto object-contain logo-blend drop-shadow-lg">
+                <img src="logo.jpg" alt="Estudio J&A" class="h-28 md:h-48 w-auto object-contain logo-blend drop-shadow-lg">
             </div>
             
             <p class="text-lg md:text-xl text-[#61525A] mb-10 max-w-2xl mx-auto font-medium">
@@ -192,66 +197,51 @@
                 <p class="text-lg text-gray-500">Confira alguns dos nossos trabalhos mais recentes</p>
             </div>
             
-            <div class="flex justify-center gap-3 mb-10 flex-wrap" id="filter-buttons">
-                <button type="button" class="filter-btn active bg-[#61525A] text-white px-6 py-2 rounded-full text-sm font-medium transition shadow-sm border border-[#61525A] cursor-pointer" data-filter="todos">Todos</button>
-                <button type="button" class="filter-btn bg-white text-[#61525A] hover:bg-gray-50 px-6 py-2 rounded-full text-sm font-medium transition shadow-sm border border-gray-200 cursor-pointer" data-filter="nail-art">Nail Art</button>
-                <button type="button" class="filter-btn bg-white text-[#61525A] hover:bg-gray-50 px-6 py-2 rounded-full text-sm font-medium transition shadow-sm border border-gray-200 cursor-pointer" data-filter="manicure">Manicure</button>
-                <button type="button" class="filter-btn bg-white text-[#61525A] hover:bg-gray-50 px-6 py-2 rounded-full text-sm font-medium transition shadow-sm border border-gray-200 cursor-pointer" data-filter="unhas-gel">Unhas de Gel</button>
-                <button type="button" class="filter-btn bg-white text-[#61525A] hover:bg-gray-50 px-6 py-2 rounded-full text-sm font-medium transition shadow-sm border border-gray-200 cursor-pointer" data-filter="pedicure">Pedicure</button>
+            <div class="flex justify-center gap-3 mb-10 flex-wrap" id="meus-botoes">
+                <button type="button" onclick="mostrarFotos('todos')" id="btn-todos" class="filter-btn active bg-[#61525A] text-white px-6 py-2 rounded-full text-sm font-medium transition shadow-sm border border-[#61525A] cursor-pointer">Todos</button>
+                <button type="button" onclick="mostrarFotos('nail-art')" id="btn-nail-art" class="filter-btn bg-white text-[#61525A] hover:bg-gray-50 px-6 py-2 rounded-full text-sm font-medium transition shadow-sm border border-gray-200 cursor-pointer">Nail Art</button>
+                <button type="button" onclick="mostrarFotos('manicure')" id="btn-manicure" class="filter-btn bg-white text-[#61525A] hover:bg-gray-50 px-6 py-2 rounded-full text-sm font-medium transition shadow-sm border border-gray-200 cursor-pointer">Manicure</button>
+                <button type="button" onclick="mostrarFotos('unhas-gel')" id="btn-unhas-gel" class="filter-btn bg-white text-[#61525A] hover:bg-gray-50 px-6 py-2 rounded-full text-sm font-medium transition shadow-sm border border-gray-200 cursor-pointer">Unhas de Gel</button>
+                <button type="button" onclick="mostrarFotos('pedicure')" id="btn-pedicure" class="filter-btn bg-white text-[#61525A] hover:bg-gray-50 px-6 py-2 rounded-full text-sm font-medium transition shadow-sm border border-gray-200 cursor-pointer">Pedicure</button>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="gallery-grid">
                 
-                <div class="gallery-item overflow-hidden rounded-2xl aspect-square shadow-md border border-gray-100 relative group cursor-pointer" data-category="unhas-gel">
-                    <img src="https://images.unsplash.com/photo-1604654894610-df490668f804?auto=format&fit=crop&w=600&q=80" alt="Unhas de Gel" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                <div class="foto-galeria unhas-gel visivel overflow-hidden rounded-2xl aspect-square shadow-md border border-gray-100 relative group bg-gray-200 flex items-center justify-center text-gray-500">
+                    <span>Sua Foto de Gel 1 Aqui</span>
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4"><span class="text-white font-medium">Unhas de Gel</span></div>
+                </div>
+                <div class="foto-galeria unhas-gel visivel overflow-hidden rounded-2xl aspect-square shadow-md border border-gray-100 relative group bg-gray-200 flex items-center justify-center text-gray-500">
+                    <span>Sua Foto de Gel 2 Aqui</span>
                     <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4"><span class="text-white font-medium">Unhas de Gel</span></div>
                 </div>
 
-                <div class="gallery-item overflow-hidden rounded-2xl aspect-square shadow-md border border-gray-100 relative group cursor-pointer" data-category="nail-art">
-                    <img src="https://images.unsplash.com/photo-1519014816548-bf5fe059798b?auto=format&fit=crop&w=600&q=80" alt="Nail Art" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                <div class="foto-galeria nail-art visivel overflow-hidden rounded-2xl aspect-square shadow-md border border-gray-100 relative group bg-gray-200 flex items-center justify-center text-gray-500">
+                    <span>Sua Foto de Nail Art 1 Aqui</span>
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4"><span class="text-white font-medium">Nail Art</span></div>
+                </div>
+                <div class="foto-galeria nail-art visivel overflow-hidden rounded-2xl aspect-square shadow-md border border-gray-100 relative group bg-gray-200 flex items-center justify-center text-gray-500">
+                    <span>Sua Foto de Nail Art 2 Aqui</span>
                     <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4"><span class="text-white font-medium">Nail Art</span></div>
                 </div>
 
-                <div class="gallery-item overflow-hidden rounded-2xl aspect-square shadow-md border border-gray-100 relative group cursor-pointer" data-category="manicure">
-                    <img src="https://images.unsplash.com/photo-1522337660859-02fbefca4702?auto=format&fit=crop&w=600&q=80" alt="Manicure" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                <div class="foto-galeria manicure visivel overflow-hidden rounded-2xl aspect-square shadow-md border border-gray-100 relative group bg-gray-200 flex items-center justify-center text-gray-500">
+                    <span>Sua Foto de Manicure 1 Aqui</span>
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4"><span class="text-white font-medium">Manicure</span></div>
+                </div>
+                <div class="foto-galeria manicure visivel overflow-hidden rounded-2xl aspect-square shadow-md border border-gray-100 relative group bg-gray-200 flex items-center justify-center text-gray-500">
+                    <span>Sua Foto de Manicure 2 Aqui</span>
                     <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4"><span class="text-white font-medium">Manicure</span></div>
                 </div>
 
-                <div class="gallery-item overflow-hidden rounded-2xl aspect-square shadow-md border border-gray-100 relative group cursor-pointer" data-category="pedicure">
-                    <img src="https://images.unsplash.com/photo-1534349762230-e0cadf78f5da?auto=format&fit=crop&w=600&q=80" alt="Pedicure" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                <div class="foto-galeria pedicure visivel overflow-hidden rounded-2xl aspect-square shadow-md border border-gray-100 relative group bg-gray-200 flex items-center justify-center text-gray-500">
+                    <span>Sua Foto de Pedicure 1 Aqui</span>
                     <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4"><span class="text-white font-medium">Pedicure</span></div>
                 </div>
-
-                <div class="gallery-item overflow-hidden rounded-2xl aspect-square shadow-md border border-gray-100 relative group cursor-pointer" data-category="nail-art">
-                    <img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=600&q=80" alt="Nail Art" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4"><span class="text-white font-medium">Nail Art</span></div>
-                </div>
-
-                <div class="gallery-item overflow-hidden rounded-2xl aspect-square shadow-md border border-gray-100 relative group cursor-pointer" data-category="unhas-gel">
-                    <img src="https://images.unsplash.com/photo-1595868337722-6e2168fa5f73?auto=format&fit=crop&w=600&q=80" alt="Unhas de Gel" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4"><span class="text-white font-medium">Unhas de Gel</span></div>
-                </div>
-
-                <div class="gallery-item overflow-hidden rounded-2xl aspect-square shadow-md border border-gray-100 relative group cursor-pointer" data-category="manicure">
-                    <img src="https://images.unsplash.com/photo-1629881691147-38e932bfaee7?auto=format&fit=crop&w=600&q=80" alt="Manicure" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4"><span class="text-white font-medium">Manicure</span></div>
-                </div>
-
-                <div class="gallery-item overflow-hidden rounded-2xl aspect-square shadow-md border border-gray-100 relative group cursor-pointer" data-category="nail-art">
-                    <img src="https://images.unsplash.com/photo-1620023604080-6ea7247a327e?auto=format&fit=crop&w=600&q=80" alt="Nail Art" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4"><span class="text-white font-medium">Nail Art</span></div>
-                </div>
-
-                <div class="gallery-item overflow-hidden rounded-2xl aspect-square shadow-md border border-gray-100 relative group cursor-pointer" data-category="pedicure">
-                    <img src="https://images.unsplash.com/photo-1542458428-fb4532c544bd?auto=format&fit=crop&w=600&q=80" alt="Pedicure" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                <div class="foto-galeria pedicure visivel overflow-hidden rounded-2xl aspect-square shadow-md border border-gray-100 relative group bg-gray-200 flex items-center justify-center text-gray-500">
+                    <span>Sua Foto de Pedicure 2 Aqui</span>
                     <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4"><span class="text-white font-medium">Pedicure</span></div>
                 </div>
-
-                <div class="gallery-item overflow-hidden rounded-2xl aspect-square shadow-md border border-gray-100 relative group cursor-pointer" data-category="unhas-gel">
-                    <img src="https://images.unsplash.com/photo-1588661605335-5136cb203309?auto=format&fit=crop&w=600&q=80" alt="Unhas de Gel" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4"><span class="text-white font-medium">Unhas de Gel</span></div>
-                </div>
-
             </div>
         </div>
     </section>
@@ -313,7 +303,7 @@
             </div>
 
             <div class="mt-8 text-center glass-panel py-4 rounded-xl border border-gray-200 shadow-sm">
-                <p class="text-sm text-gray-600">📱 Prefere agendar por WhatsApp? <a href="https://wa.me/5511987654321" target="_blank" class="font-bold text-[#61525A] hover:underline">Clique aqui</a></p>
+                <p class="text-sm text-gray-600">📱 Prefere agendar por WhatsApp? <a href="https://wa.me/5511984497011" target="_blank" class="font-bold text-[#61525A] hover:underline">Clique aqui</a></p>
             </div>
         </div>
     </section>
@@ -337,14 +327,14 @@
                                 <div class="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center shrink-0 text-[#61525A]"><i data-lucide="map-pin" class="w-6 h-6"></i></div>
                                 <div>
                                     <h4 class="font-semibold text-[#2D2424] mb-1">Endereço</h4>
-                                    <p class="text-sm text-gray-500">Rua das Flores, 123 - Centro<br>Moji-Mirim - SP</p>
+                                    <p class="text-sm text-gray-500">Rua Paschoal Ciaramela, 000 - Centro<br>Jundiai - SP</p>
                                 </div>
                             </div>
                             <div class="flex items-start gap-4">
                                 <div class="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center shrink-0 text-[#61525A]"><i data-lucide="phone" class="w-6 h-6"></i></div>
                                 <div>
                                     <h4 class="font-semibold text-[#2D2424] mb-1">Telefone</h4>
-                                    <p class="text-sm text-gray-500 mb-1">(11) 98765-4321</p>
+                                    <p class="text-sm text-gray-500 mb-1">(11) 98449-7011</p>
                                 </div>
                             </div>
                             <div class="flex items-start gap-4">
@@ -400,7 +390,7 @@
                             <label class="block text-sm font-medium text-[#2D2424] mb-2">Mensagem</label>
                             <textarea rows="6" placeholder="Digite sua mensagem..." class="w-full px-4 py-2.5 bg-transparent border-2 border-gray-200 rounded-lg outline-none focus:border-[#61525A] text-sm resize-none"></textarea>
                         </div>
-                        <button type="button" onclick="alert('Mensagem enviada com sucesso!')" class="w-full btn-primary text-white py-4 rounded-lg font-medium text-lg flex justify-center items-center gap-2 shadow-md">
+                        <button type="button" onclick="alert('Esta função estará disponível em breve. Por favor, use o WhatsApp!')" class="w-full btn-primary text-white py-4 rounded-lg font-medium text-lg flex justify-center items-center gap-2 shadow-md">
                             <i data-lucide="send" class="w-5 h-5"></i> Enviar Mensagem
                         </button>
                     </form>
@@ -415,9 +405,9 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
                 
                 <div>
-                    <img src="logo.png" alt="Estudio J&A" class="h-20 w-auto mb-4 object-contain logo-blend">
+                    <img src="logo.jpg" alt="Estudio J&A" class="h-20 w-auto mb-4 object-contain logo-blend">
                     <p class="text-sm text-gray-500 leading-relaxed">
-                        Transformando suas unhas em obras de arte desde 2019.
+                        Transformando as suas unhas em obras de arte desde 2022.
                     </p>
                     <div class="flex gap-3 mt-6">
                         <a href="https://www.instagram.com/estudio_yalexary/" target="_blank" class="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center text-[#61525A] hover:opacity-80 transition"><i data-lucide="instagram" class="w-5 h-5"></i></a>
@@ -448,8 +438,8 @@
                 <div>
                     <h4 class="font-semibold text-[#2D2424] mb-4">Contato</h4>
                     <ul class="space-y-3 text-sm text-gray-500">
-                        <li class="flex items-start gap-2"><i data-lucide="map-pin" class="w-4 h-4 mt-1 text-[#61525A]"></i> Rua das Flores, 123 - Centro<br>Moji-Mirim - SP</li>
-                        <li class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-[#61525A]"></i> (11) 98765-4321</li>
+                        <li class="flex items-start gap-2"><i data-lucide="map-pin" class="w-4 h-4 mt-1 text-[#61525A]"></i> Rua paschoal Ciaramela, 000 - Centro<br>Jundiai - SP</li>
+                        <li class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-[#61525A]"></i> (11) 98449-7011</li>
                         <li class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4 text-[#61525A]"></i> contato@estudioja.com.br</li>
                     </ul>
                 </div>
@@ -462,100 +452,43 @@
 
             <div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-gray-100 gap-4">
                 <p class="text-sm text-gray-500">© 2026 Estudio J&A. Todos os direitos reservados.</p>
-                <p class="text-sm text-gray-500 flex items-center gap-1">Feito com <i data-lucide="heart" class="w-4 h-4 text-[#61525A]"></i> para você</p>
+                <p class="text-sm text-gray-500 flex items-center gap-1">Feito com <i data-lucide="heart" class="w-4 h-4 text-[#61525A]"></i> para si</p>
             </div>
         </div>
     </footer>
 
     <script>
-        // 1. CARREGA ÍCONES
-        lucide.createIcons();
+        function mostrarFotos(categoriaSelecionada) {
+            
+            // 1. Tira a cor "ativa" de todos os botões e pinta de branco
+            const todosBotoes = document.querySelectorAll('.filter-btn');
+            for (let i = 0; i < todosBotoes.length; i++) {
+                todosBotoes[i].className = "filter-btn bg-white text-[#61525A] hover:bg-gray-50 px-6 py-2 rounded-full text-sm font-medium transition shadow-sm border border-gray-200 cursor-pointer";
+            }
 
-        // 2. LÓGICA DO FILTRO DA GALERIA (BLINDADA)
-        document.addEventListener('DOMContentLoaded', () => {
-            const filterBtns = document.querySelectorAll('.filter-btn');
-            const galleryItems = document.querySelectorAll('.gallery-item');
+            // 2. Coloca a cor "ativa" (vinho) apenas no botão que clicou
+            const botaoClicado = document.getElementById('btn-' + categoriaSelecionada);
+            if(botaoClicado) {
+                botaoClicado.className = "filter-btn active bg-[#61525A] text-white px-6 py-2 rounded-full text-sm font-medium transition shadow-sm border border-[#61525A] cursor-pointer";
+            }
 
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    
-                    // Reseta as cores de todos os botões para branco
-                    filterBtns.forEach(f => {
-                        f.classList.remove('bg-[#61525A]', 'text-white', 'border-[#61525A]');
-                        f.classList.add('bg-white', 'text-[#61525A]', 'border-gray-200');
-                    });
-
-                    // Pinta apenas o botão clicado com a cor principal
-                    btn.classList.remove('bg-white', 'text-[#61525A]', 'border-gray-200');
-                    btn.classList.add('bg-[#61525A]', 'text-white', 'border-[#61525A]');
-
-                    // Descobre qual foi a categoria escolhida
-                    const filterValue = btn.getAttribute('data-filter');
-
-                    // Mostra ou esconde as fotos
-                    galleryItems.forEach(item => {
-                        if (filterValue === 'todos' || item.getAttribute('data-category') === filterValue) {
-                            item.style.display = 'block'; // Mostra o item
-                            setTimeout(() => { item.style.opacity = '1'; }, 10); // Efeito suave
-                        } else {
-                            item.style.opacity = '0'; // Esconde com efeito
-                            setTimeout(() => { item.style.display = 'none'; }, 300); // Remove o espaço vazio
-                        }
-                    });
-                });
-            });
-        });
-
-        // 3. LÓGICA DE AGENDAMENTO
-        const supabaseUrl = 'SUA_URL_DO_SUPABASE';
-        const supabaseKey = 'SUA_CHAVE_ANON_DO_SUPABASE';
-        let supabase = null;
-
-        if (supabaseUrl.startsWith('http')) {
-            try {
-                supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-            } catch (e) {
-                console.warn('Supabase não conectado.');
+            // 3. Mostra ou esconde as fotos conforme a categoria
+            const todasFotos = document.querySelectorAll('.foto-galeria');
+            for (let i = 0; i < todasFotos.length; i++) {
+                // Remove ambas as classes para limpar o estado
+                todasFotos[i].classList.remove('visivel');
+                todasFotos[i].classList.remove('escondido');
+                
+                // se a foto tiver a classe da categoria (ou se clicou em 'todos'), ela recebe 'visivel'
+                if (categoriaSelecionada === 'todos' || todasFotos[i].classList.contains(categoriaSelecionada)) {
+                    todasFotos[i].classList.add('visivel');
+                } else {
+                    todasFotos[i].classList.add('escondido');
+                }
             }
         }
 
-        document.getElementById('form-agendamento').addEventListener('submit', async (e) => {
-            e.preventDefault(); 
-            const btn = document.getElementById('btn-submit');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = "Enviando...";
-            btn.disabled = true;
-
-            const dados = {
-                cliente_nome: document.getElementById('nome').value,
-                cliente_email: document.getElementById('email').value,
-                cliente_telefone: document.getElementById('telefone').value,
-                servico: document.getElementById('servico').value, 
-                data_agendamento: document.getElementById('data_agendamento').value,
-                horario_agendamento: document.getElementById('horario_agendamento').value,
-            };
-
-            try {
-                if(supabase) {
-                   const { error } = await supabase.from('agendamentos').insert([dados]);
-                   if (error) throw error;
-                }
-            
-                const numeroWhatsApp = "5511987654321"; 
-                const dataFormatada = dados.data_agendamento.split('-').reverse().join('/');
-                const textoWa = `Olá! Meu nome é ${dados.cliente_nome}. Gostaria de confirmar meu agendamento de *${dados.servico}* para o dia ${dataFormatada} às ${dados.horario_agendamento}.`;
-                
-                window.open(`https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(textoWa)}`, '_blank');
-                document.getElementById('form-agendamento').reset();
-
-            } catch (error) {
-                console.error('Erro:', error);
-                alert("Ocorreu um erro, mas você será redirecionada para o WhatsApp!");
-            } finally {
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-            }
-        });
+        try { lucide.createIcons(); } catch(e) {}
     </script>
 </body>
 </html>
