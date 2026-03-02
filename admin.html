@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel ADM | Estudio J&A</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+    
+    <div class="max-w-6xl mx-auto p-8">
+        <header class="flex justify-between items-center mb-10 pb-6 border-b border-gray-200">
+            <div>
+                <h1 class="text-2xl font-bold text-[#2D2424]">Painel Administrativo</h1>
+                <p class="text-sm text-gray-500">Controle de Agendamentos do Site</p>
+            </div>
+            <a href="index.html" class="flex items-center gap-2 text-sm text-[#D4AF37] hover:underline">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i> Voltar ao site
+            </a>
+        </header>
+
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+            <table class="w-full text-left text-sm">
+                <thead class="bg-gray-50 text-gray-500 uppercase text-xs">
+                    <tr>
+                        <th class="px-6 py-4">Cliente</th>
+                        <th class="px-6 py-4">Serviço</th>
+                        <th class="px-6 py-4">Data e Hora</th>
+                        <th class="px-6 py-4">Status</th>
+                    </tr>
+                </thead>
+                <tbody id="tabela-agendamentos" class="divide-y divide-gray-100">
+                    <tr><td colspan="4" class="px-6 py-8 text-center text-gray-400">Carregando agendamentos...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        // Substitua pelas suas chaves do Supabase
+        const supabaseUrl = 'SUA_URL_DO_SUPABASE';
+        const supabaseKey = 'SUA_CHAVE_ANON_DO_SUPABASE';
+        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+        async function carregarAgendamentos() {
+            if(supabaseUrl === 'SUA_URL_DO_SUPABASE') {
+                document.getElementById('tabela-agendamentos').innerHTML = '<tr><td colspan="4" class="px-6 py-8 text-center text-red-500">Configure suas chaves do Supabase no código para ver os dados!</td></tr>';
+                return;
+            }
+
+            const { data, error } = await supabase.from('agendamentos').select('*').order('data_agendamento', { ascending: false });
+            
+            if (error) {
+                console.error(error);
+                return;
+            }
+
+            const tbody = document.getElementById('tabela-agendamentos');
+            tbody.innerHTML = ''; // limpa o aviso de "carregando"
+
+            data.forEach(agendamento => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-gray-50";
+                
+                // Formata a data (de YYYY-MM-DD para DD/MM/YYYY)
+                const dataBR = agendamento.data_agendamento.split('-').reverse().join('/');
+
+                tr.innerHTML = `
+                    <td class="px-6 py-4">
+                        <p class="font-bold text-[#2D2424]">${agendamento.cliente_nome}</p>
+                        <a href="https://wa.me/55${agendamento.cliente_telefone.replace(/\D/g, '')}" target="_blank" class="text-xs text-green-600 hover:underline flex items-center gap-1 mt-1">
+                            <i data-lucide="message-circle" class="w-3 h-3"></i> ${agendamento.cliente_telefone}
+                        </a>
+                    </td>
+                    <td class="px-6 py-4 font-medium text-gray-600">${agendamento.servico || 'Não informado'}</td>
+                    <td class="px-6 py-4"><span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-bold">${dataBR} às ${agendamento.horario_agendamento}</span></td>
+                    <td class="px-6 py-4"><span class="text-yellow-600 bg-yellow-50 px-2 py-1 rounded text-xs uppercase font-bold tracking-wider">Aguardando</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+            lucide.createIcons(); // Recarrega os ícones para os novos elementos
+        }
+
+        carregarAgendamentos();
+    </script>
+</body>
+</html>
